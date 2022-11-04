@@ -3,6 +3,7 @@ import type { AWS } from "@serverless/typescript";
 import hello from "@functions/hello";
 import { S3 } from "./serverless/s3-resources";
 import { cognito } from "./serverless/cognito-resources";
+import { dynamo } from "./serverless/dynamo-resources";
 
 const serverlessConfiguration: AWS = {
   service: "wildrydes-site",
@@ -39,6 +40,7 @@ const serverlessConfiguration: AWS = {
     userPoolName: "${self:custom.productName}-user-pool-${sls:stage}",
     userPoolClientName:
       "${self:custom.productName}-user-pool-client-${sls:stage}",
+    tableName: "${self:custom.productName}-table-${sls:stage}",
     s3Sync: [
       {
         bucketName: "${self:custom.websiteBucketName}",
@@ -50,6 +52,7 @@ const serverlessConfiguration: AWS = {
     Resources: {
       ...S3,
       ...cognito,
+      ...dynamo,
     },
   },
 };
