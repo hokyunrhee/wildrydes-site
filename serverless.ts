@@ -1,9 +1,9 @@
 import type { AWS } from "@serverless/typescript";
 
-import hello from "@functions/hello";
 import { S3 } from "./serverless/s3-resources";
 import { cognito } from "./serverless/cognito-resources";
 import { dynamo } from "./serverless/dynamo-resources";
+import { functions } from "./serverless/functions";
 
 const serverlessConfiguration: AWS = {
   service: "wildrydes-site",
@@ -21,8 +21,7 @@ const serverlessConfiguration: AWS = {
       NODE_OPTIONS: "--enable-source-maps --stack-trace-limit=1000",
     },
   },
-  // import the function via paths
-  functions: { hello },
+  functions,
   package: { individually: true },
   custom: {
     esbuild: {
