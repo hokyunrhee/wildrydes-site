@@ -2,6 +2,7 @@ import type { AWS } from "@serverless/typescript";
 
 import hello from "@functions/hello";
 import { S3 } from "./serverless/s3-resources";
+import { cognito } from "./serverless/cognito-resources";
 
 const serverlessConfiguration: AWS = {
   service: "wildrydes-site",
@@ -35,6 +36,9 @@ const serverlessConfiguration: AWS = {
     },
     productName: "wildrydes",
     websiteBucketName: "${self:custom.productName}-website-${sls:stage}",
+    userPoolName: "${self:custom.productName}-user-pool-${sls:stage}",
+    userPoolClientName:
+      "${self:custom.productName}-user-pool-client-${sls:stage}",
     s3Sync: [
       {
         bucketName: "${self:custom.websiteBucketName}",
@@ -45,6 +49,7 @@ const serverlessConfiguration: AWS = {
   resources: {
     Resources: {
       ...S3,
+      ...cognito,
     },
   },
 };
